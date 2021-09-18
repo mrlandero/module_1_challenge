@@ -1,4 +1,9 @@
 
+# Import the CSV library to my file
+import csv
+# Create the path where I need my information to go
+from pathlib import Path
+
 # List of loan costs stored into variable (loan_costs)
 loan_costs = [500, 600, 200, 1000, 450]
 
@@ -106,6 +111,9 @@ loan_data_three = [
     },
 ]
 
+# Create a header variable and assign it the keys (labels) from the dictionaries
+header = ["loan_price" , "remaining_months" , "repayment_interval" , "future_value"]
+
 # Create an empty list that we can later populate with inexpensive loans
 inexpensive_loans = []
 
@@ -117,11 +125,28 @@ for item in loan_data_three:
    print(loan_price)
   # Create a conditional to test whether a certain loan price is under our $500 limit
    if loan_price <= 500:
-     # If so, append the laon price to the list called inexpensive loans using the append() method
-     inexpensive_loans.append(loan_price)
+     # If so, append the item to the list called inexpensive loans using the append() method
+     inexpensive_loans.append(item)
 
 # Print the resulting new list in a formatted string
 print(f"The new list of inexpensive loans is: {inexpensive_loans}")
+
+# Create the Path (file) name as inexpensive_loans.csv and store it to a variable
+csvpath = Path("inexpensive_loans.csv")
+# Open the CSV file with the Path created. 'w for writing and store it as csvfile
+with open(csvpath, 'w', newline='') as csvfile:
+  # Create a csvwriter variable that we can use to write directly into the CSV file
+  csvwriter = csv.writer(csvfile)
+  # Write the header in our CSV file
+  csvwriter.writerow(header)
+  # Write the actual data rows in our CSV file
+  for row in inexpensive_loans:
+    csvwriter.writerow(row.values())
+
+
+
+
+
   
   
 
